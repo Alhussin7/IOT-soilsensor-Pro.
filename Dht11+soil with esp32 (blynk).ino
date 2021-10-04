@@ -82,6 +82,7 @@ void sendSensor()
 void sendSensor2()
 {
    s = analogRead(sensorpin);
+   s = map(s,0,4000,0,20);
   Blynk.virtualWrite(V3, s);
 }
 void setup()
@@ -95,16 +96,17 @@ delay(1000);
   //Blynk.begin(auth, ssid, pass, IPAddress(192,168,1,100), 8080);
 
   dht.begin();
+  analog.begin();
 
-  // Setup a function to be called every second
+  //Setup a function to be called every second
   timer.setInterval(1000L, sendSensor);
   timer.setInterval(4000L, sendSensor2);
 }
 
 void loop()
 {
-  Serial.println(sensorpin);
-  s = analogRead(sensorpin);
+  Serial.println(s);
+  s = analogRead(s);
   Blynk.virtualWrite(V3, s);
   Blynk.run();
   timer.run();
